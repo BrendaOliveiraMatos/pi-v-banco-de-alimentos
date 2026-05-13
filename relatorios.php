@@ -28,7 +28,10 @@ $resultado = $conn->query($sql);
 <body>
 
     <aside class="sidebar">
-        <div class="sidebar-logo">MA MÃOS AMIGAS</div>
+        <div class="sidebar-logo">
+            <img src="img/logo.png" alt="Logo Lions Club">
+            <div class="sidebar-logo-text">LIONS<br>CLUB</div>
+        </div>
         <nav class="sidebar-nav">
             <a href="dashboard.php">Início (Dashboard)</a>
             <a href="cadastro_produto.php">Produtos (Catálogo)</a>
