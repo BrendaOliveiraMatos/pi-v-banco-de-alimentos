@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
-    // Em um sistema real, usaríamos password_hash(). Aqui mantemos simples para o projeto acadêmico.
     $sql = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'";
     $resultado = $conn->query($sql);
 
@@ -29,13 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Mãos Amigas</title>
+    <title>Login - Lions Club</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-login">
 
     <div class="login-box">
-        <div class="logo-login">Mãos Amigas</div>
+        <img src="img/logo.png" alt="Logo Lions Club" style="max-width: 90px; margin-bottom: 10px;">
+        <div class="logo-login">LIONS CLUB</div>
         <p>Sistema de Gestão de Banco de Alimentos</p>
         
         <?php if($erro != "") { echo "<div class='alerta-erro'>$erro</div>"; } ?>
