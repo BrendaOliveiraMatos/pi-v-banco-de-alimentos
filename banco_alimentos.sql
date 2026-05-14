@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13/05/2026 às 21:41
+-- Tempo de geração: 14/05/2026 às 21:01
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `beneficiarios`
+--
+
+CREATE TABLE `beneficiarios` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `beneficiarios`
+--
+
+INSERT INTO `beneficiarios` (`id`, `nome`) VALUES
+(1, 'Creche Municipal Vovó Cida'),
+(2, 'Família Silva (Cadastro Assistência Social)'),
+(3, 'Asilo Esperança'),
+(4, 'Associação de Moradores do Bairro');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `categorias`
 --
 
@@ -40,7 +61,8 @@ INSERT INTO `categorias` (`id`, `nome`) VALUES
 (1, 'Cereais'),
 (2, 'Enlatados'),
 (3, 'Hortifruti'),
-(4, 'Laticínios');
+(4, 'Laticínios'),
+(5, 'Padaria e Confeitaria');
 
 -- --------------------------------------------------------
 
@@ -59,7 +81,11 @@ CREATE TABLE `doadores` (
 --
 
 INSERT INTO `doadores` (`id`, `nome`, `telefone`) VALUES
-(1, 'Supermercado Bertolini', '18996515496');
+(1, 'Supermercado Bertolini', '18996515496'),
+(2, 'Ateliê do Bolo & Co', NULL),
+(3, 'Hortifruti Andradina', NULL),
+(4, 'Fazenda Esperança', NULL),
+(5, 'Distribuidora Silva', NULL);
 
 -- --------------------------------------------------------
 
@@ -83,7 +109,12 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `quantidade`, `unidade`, `data_validade`, `categoria_id`, `doador_id`, `data_cadastro`) VALUES
-(5, 'Arroz Branco', 10, 'pct(s) de 5.00 Kg', '2026-06-20', 1, 1, '2026-05-12 18:11:30');
+(1, 'Arroz Branco 5kg', 50, 'Pacotes', '2027-01-10', 1, 1, '2026-05-02 03:00:00'),
+(2, 'Feijão Carioca 1kg', 20, 'Pacotes', '2026-04-10', 1, 5, '2026-04-05 03:00:00'),
+(3, 'Bolos Caseiros Sortidos', 15, 'Unidades', '2026-05-20', 5, 2, '2026-05-12 03:00:00'),
+(4, 'Leite Integral 1L', 100, 'Caixas', '2026-08-25', 3, 1, '2026-05-05 03:00:00'),
+(5, 'Arroz Branco', 10, 'pct(s) de 5.00 Kg', '2026-06-20', 1, 1, '2026-05-12 18:11:30'),
+(6, 'Macarrão Espaguete 500g', 80, 'Pacotes', '2026-12-01', 1, 5, '2026-05-14 03:00:00');
 
 -- --------------------------------------------------------
 
@@ -116,10 +147,21 @@ INSERT INTO `produtos_catalogo` (`id`, `nome`, `peso`, `categoria_id`, `unidade`
 CREATE TABLE `saidas` (
   `id` int(11) NOT NULL,
   `produto_id` int(11) NOT NULL,
+  `beneficiario_id` int(11) DEFAULT NULL,
   `quantidade` int(11) NOT NULL,
   `beneficiario` varchar(100) NOT NULL,
   `data_saida` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `saidas`
+--
+
+INSERT INTO `saidas` (`id`, `produto_id`, `beneficiario_id`, `quantidade`, `beneficiario`, `data_saida`) VALUES
+(1, 1, 1, 10, '', '2026-05-05 03:00:00'),
+(2, 4, 2, 25, '', '2026-05-08 03:00:00'),
+(3, 3, 3, 5, '', '2026-05-13 03:00:00'),
+(4, 1, 1, 5, '', '2026-05-14 03:00:00');
 
 -- --------------------------------------------------------
 
@@ -144,6 +186,12 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices de tabela `beneficiarios`
+--
+ALTER TABLE `beneficiarios`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `categorias`
@@ -191,22 +239,28 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de tabela `beneficiarios`
+--
+ALTER TABLE `beneficiarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `doadores`
 --
 ALTER TABLE `doadores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `produtos_catalogo`
@@ -218,7 +272,7 @@ ALTER TABLE `produtos_catalogo`
 -- AUTO_INCREMENT de tabela `saidas`
 --
 ALTER TABLE `saidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
